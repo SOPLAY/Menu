@@ -1,3 +1,5 @@
+// import { XMLBuilder } from "fast-xml-parser";
+
 type HansotMenuTpye = {
   mainMenu: { menu: string; price: number }[];
   subMenu: { menu: string; price: number }[];
@@ -123,3 +125,11 @@ export const getSubMenu = () => {
   const { menu, price } = HansotMenu.subMenu[index];
   return { menu, price };
 };
+
+// export const getXML = () => {
+//   const builder = new XMLBuilder({
+//     arrayNodeName: "Menu",
+//   });
+//   const xml = builder.build(HansotMenu);
+//   console.log(xml);
+// };
