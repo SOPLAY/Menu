@@ -112,4 +112,14 @@ export const HansotMenu: HansotMenuTpye = {
   ],
 };
 
-console.log(HansotMenu.mainMenu.length);
+export const getMainMenu = () => {
+  const index = Math.floor(Math.random() * HansotMenu.mainMenu.length);
+  const { menu, price } = HansotMenu.mainMenu[index];
+  return { menu, price };
+};
+
+export const getSubMenu = () => {
+  const index = Math.floor(Math.random() * HansotMenu.subMenu.length);
+  const { menu, price } = HansotMenu.subMenu[index];
+  return { menu, price };
+};

@@ -1,16 +1,16 @@
-import { Alert, Checkbox, Drawer, Image } from "antd";
+import { Alert, Checkbox, Drawer } from "antd";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { Header } from "antd/lib/layout/layout";
 import "antd/dist/antd.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logoImg from "./img/h_logo.png";
-import SubMenu from "antd/lib/menu/SubMenu";
+import { getMainMenu, getSubMenu } from "./Menus/HansotMenu";
 const Body = styled.div``;
 
 const options = [
   { label: "메인메뉴", value: "mainMenu" },
-  { label: "반찬", value: "subMenu" },
+  { label: "서브메뉴", value: "subMenu" },
 ];
 const LogoImgContainer = styled.div`
   width: 100%;
@@ -33,17 +33,26 @@ const Button = styled.button`
 `;
 function App() {
   const Init: CheckboxValueType[] = [];
-  const [ResMenu, setResMenu] = useState("");
   const [CheckValue, setCheckValue] = useState(Init);
   const [Visible, setVisible] = useState(false);
   const [MainMenu, setMainMenu] = useState(false);
   const [SubMenu, setSubMenu] = useState(false);
+  const [MainMenuValue, setMainMenuValue] = useState(getMainMenu());
+  const [SubMenuValue, setSubMenuValue] = useState(getSubMenu());
+
   const onClick = () => {
     //setResMenu()
     setMainMenu(CheckValue.includes("mainMenu") ? true : false);
+    MainMenu && setMainMenuValue(getMainMenu());
     setSubMenu(CheckValue.includes("subMenu") ? true : false);
-
+    SubMenu && setSubMenuValue(getSubMenu());
     reverseVisible();
+  };
+  const getPrice = () => {
+    let res = 0;
+    res += MainMenu ? MainMenuValue.price : 0;
+    res += SubMenu ? SubMenuValue.price : 0;
+    return res;
   };
   const reverseVisible = () => {
     setVisible(!Visible);
@@ -78,9 +87,17 @@ function App() {
             visible={Visible}
             height="70%"
           >
-            {MainMenu && <p>Main Menu</p>}
-            {SubMenu && <p>Sub Menu</p>}
-            {SubMenu || MainMenu || <p>체크박스를 1개이상 체크!</p>}
+            {MainMenu && (
+              <p>{`메인 메뉴 : ${MainMenuValue.menu} , 가격 : ${MainMenuValue.price}`}</p>
+            )}
+            {SubMenu && (
+              <p>{`서브 메뉴 : ${SubMenuValue.menu} , 가격 : ${SubMenuValue.price}`}</p>
+            )}
+            {SubMenu || MainMenu ? (
+              <p>{`합계 : ${getPrice()}`} </p>
+            ) : (
+              <p>체크박스를 1개이상 체크!</p>
+            )}
           </Drawer>
         </div>
       </Body>
