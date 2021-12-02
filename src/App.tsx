@@ -37,19 +37,18 @@ const Button = styled.button`
   font-size: 2rem;
 `;
 const TotalContainer = styled.div`
-  @media screen and (min-width: 500px) {
-    max-width: 810px;
-  }
   background: #e3e3e3;
   text-align: center;
-  max-width: 400px;
   font-size: 1.2rem;
   font-weight: bold;
-  padding: 5px 0;
+  margin-left: 0 !important;
 `;
 const SelectItemContainer = styled.div`
   @media screen and (min-width: 500px) {
-    display: flex;
+    display: inline-block;
+    .menuItems {
+      display: flex;
+    }
     div {
       & + div {
         margin-left: 10px;
@@ -170,14 +169,16 @@ function App() {
             height="70%"
           >
             <SelectItemContainer>
-              {MainMenu && MenuItem(MainMenuValue)}
-              {SubMenu && MenuItem(SubMenuValue)}
+              <div className="menuItems">
+                {MainMenu && MenuItem(MainMenuValue)}
+                {SubMenu && MenuItem(SubMenuValue)}
+              </div>
+              {SubMenu || MainMenu ? (
+                <TotalContainer>{`합계 : ${getPrice()}원`} </TotalContainer>
+              ) : (
+                <p>체크박스를 1개이상 체크!</p>
+              )}
             </SelectItemContainer>
-            {SubMenu || MainMenu ? (
-              <TotalContainer>{`합계 : ${getPrice()}원`} </TotalContainer>
-            ) : (
-              <p>체크박스를 1개이상 체크!</p>
-            )}
           </Drawer>
         </div>
       </Body>
