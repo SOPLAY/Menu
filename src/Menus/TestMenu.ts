@@ -1,11 +1,41 @@
+type TypeMenu = { menu: string; price: number; imgPath: string };
+
 type HansotMenuTpye = {
-  eventMenu: { menu: string; price: number; imgPath: string }[];
-  premiumMenu: { menu: string; price: number; imgPath: string }[];
-  squareMenu: { menu: string; price: number; imgPath: string }[];
-  bowlMenu: { menu: string; price: number; imgPath: string }[];
-  subMenu: { menu: string; price: number; imgPath: string }[];
+  eventMenu: TypeMenu[];
+  premiumMenu: TypeMenu[];
+  squareMenu: TypeMenu[];
+  bowlMenu: TypeMenu[];
+  subMenu: TypeMenu[];
 };
-export const HansotMenu: HansotMenuTpye = {
+export const makeJSON = () => {
+  console.log(JSON.stringify(HansotMenu));
+};
+type TypeGetMainMenu = {
+  eventMenu: boolean;
+  premiumMenu: boolean;
+  squareMenu: boolean;
+  bowlMenu: boolean;
+};
+
+export const getMainMenu = ({
+  eventMenu = false,
+  premiumMenu = false,
+  squareMenu = false,
+  bowlMenu = false,
+}: TypeGetMainMenu) => {
+  let res: TypeMenu[] = [];
+  eventMenu && res.push(...HansotMenu.eventMenu);
+  premiumMenu && res.push(...HansotMenu.premiumMenu);
+  squareMenu && res.push(...HansotMenu.squareMenu);
+  bowlMenu && res.push(...HansotMenu.bowlMenu);
+  return res;
+};
+
+export const getSubMenu = () => {
+  return HansotMenu.subMenu;
+};
+
+const HansotMenu: HansotMenuTpye = {
   eventMenu: [
     {
       menu: "김치 부대찌개",
